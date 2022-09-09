@@ -26,7 +26,7 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('contact');
+        return view('contacts.create');
     }
 
     /**
@@ -69,7 +69,8 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        //
+
+        return view('contacts.edit', compact('contact'));
     }
 
     /**
@@ -81,6 +82,17 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
+
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required|digits:9',
+            'age' => 'required|numeric|min:1|max:255'
+        ]);
+
+        $contact->update($data);
+
+        return redirect()->route('home');
     }
 
     /**
@@ -91,6 +103,6 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        echo('Delete Contact');
     }
 }

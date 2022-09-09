@@ -12,8 +12,8 @@
               <p class="m-2">{{ $contact->phone_number }}</p>
               <p class="m-2">{{ $contact->email }}</p>
               <p class="m-2">{{ $contact->age }}</p>
-              <a href="{{ route('contacts.update') }}" class="btn btn-secondary mb-2">Edit Contact</a>
-              {{-- <a href="{{ route('contacts.delete') }}" class="btn btn-danger mb-2">Delete Contact</a> --}}
+              <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-secondary mb-2">Edit Contact</a>
+              {{-- <a href="{{ route('contacts.destroy') }}" class="btn btn-danger mb-2">Delete Contact</a> --}}
             </div>
           </div>
         </div>
