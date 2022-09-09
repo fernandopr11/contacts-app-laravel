@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -36,15 +37,17 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'phone_number' => 'required|digits:9',
             'age' => 'required|numeric|min:1|max:255'
         ]);
 
+        Contact::create($data);
 
-        return response("Contact Created");
+
+        return redirect()->route('home');
     }
 
     /**
@@ -78,7 +81,6 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
     }
 
     /**
