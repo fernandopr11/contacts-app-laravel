@@ -103,6 +103,8 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        echo('Delete Contact');
+        $contact->delete();
+
+        return redirect()->route('home');
     }
 }
