@@ -14,9 +14,13 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return view('contacts.index', ['contacts' => Contact::all()]);
+
+        $contacts = auth()->user()->contacts;
+
+        return view('contacts.index', compact('contacts'));
     }
 
     /**
@@ -42,7 +46,10 @@ class ContactController extends Controller
             'email' => 'required|email',
             'phone_number' => 'required|digits:9',
             'age' => 'required|numeric|min:1|max:255'
+
         ]);
+
+        $data['user_id'] = auth()->id();
 
         Contact::create($data);
 
