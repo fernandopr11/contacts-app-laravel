@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
 // use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
 
     public function index()
     {
@@ -41,22 +43,10 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreContactRequest $request)
     {
 
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'required|digits:9',
-            'age' => 'required|numeric|min:1|max:255'
-
-        ]);
-
-        $data['user_id'] = auth()->id();
-
-
-        Contact::create($data);
-
+        auth()->user()->contacts()->create($request->validated());
 
         return redirect()->route('home');
     }
@@ -95,16 +85,11 @@ class ContactController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update(StoreContactRequest $request, Contact $contact)
     {
 
 
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'required|digits:9',
-            'age' => 'required|numeric|min:1|max:255'
-        ]);
+        $data = $request->validated();
 
         $contact->update($data);
 
