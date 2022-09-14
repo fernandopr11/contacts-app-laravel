@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 // use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 // use Illuminate\Support\Facades\Response;
 
 class ContactController extends Controller
@@ -41,6 +43,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -50,6 +53,7 @@ class ContactController extends Controller
         ]);
 
         $data['user_id'] = auth()->id();
+
 
         Contact::create($data);
 
@@ -65,6 +69,9 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+
+        $this->authorize('view', $contact);
+
         return view('contacts.show', compact('contact'));
     }
 
@@ -76,6 +83,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
+        $this->authorize('update', $contact);
 
         return view('contacts.edit', compact('contact'));
     }
@@ -89,6 +97,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
+
 
         $data = $request->validate([
             'name' => 'required',
@@ -110,6 +119,9 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
+
+        $this->authorize('delete', $contact);
+
         $contact->delete();
 
         return redirect()->route('home');
