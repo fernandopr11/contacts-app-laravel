@@ -8,6 +8,12 @@
         <div class="col-md-4 mb-3">
           <div class="card text-center">
             <div class="card-body">
+              <div class="d-flex justify-content-center">
+                <a class="text-decoration-none" href="{{ route('contacts.show', $contact->id) }}">
+                  <img src="{{ Storage::url($contact->profile_picture) }}" alt="image-{{ $contact->name }}"
+                    class="profile-picture">
+                </a>
+              </div>
               <a class="text-decoration-none" href="{{ route('contacts.show', $contact->id) }}">
                 <h3 class="card-title text-capitalize">{{ $contact->name }}</h3>
               </a>

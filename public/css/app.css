@@ -10923,11 +10923,18 @@ textarea.form-control-lg {
   background-color: #303030;
 }
 .navbar img {
-    width: 1.2rem;
+  width: 1.2rem;
 }
 
 .welcome {
-    background: url(/images/background.jpg?ee05887d2fdc32f329b3a87d0c161e18);
-    background-position: center center;
-    background-size: cover;
+  background: url(/images/background.jpg?ee05887d2fdc32f329b3a87d0c161e18);
+  background-position: center center;
+  background-size: cover;
 }
+
+.profile-picture {
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+}
+

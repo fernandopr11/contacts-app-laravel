@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
+use Illuminate\Contracts\Cache\Store;
 // use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 // use Illuminate\Support\Facades\Response;
 
@@ -45,8 +47,16 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
+        $data =  $request->validated();
 
-        $contact = auth()->user()->contacts()->create($request->validated());
+        if ($request->hasFile('profile_picture')) {
+
+            $path = $request->file('profile_picture')->store('profiles', 'public');
+            $data['profile_picture'] = $path;
+        }
+
+
+        $contact = auth()->user()->contacts()->create($data);
 
         return redirect()->route('home')->with(
             'alert',
@@ -96,6 +106,14 @@ class ContactController extends Controller
 
 
         $data = $request->validated();
+
+        $data =  $request->validated();
+
+        if ($request->hasFile('profile_picture')) {
+
+            $path = $request->file('profile_picture')->store('profiles', 'public');
+            $data['profile_picture'] = $path;
+        }
 
         $contact->update($data);
 
