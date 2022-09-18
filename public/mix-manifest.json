@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/welcome.js": "/js/welcome.js",
+    "/js/removealert.js": "/js/removealert.js",
     "/css/app.css": "/css/app.css",
     "/img/background.jpg": "/img/background.jpg",
     "/img/logo.png": "/img/logo.png"
