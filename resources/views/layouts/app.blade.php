@@ -92,6 +92,16 @@
       @if ($alert = session()->get('alert'))
         <x-alert :type="$alert['type']" :message="$alert['message']" />
       @endif
+      @if (!auth()->user()
+          ?->subscribed() &&
+          auth()->user()
+              ?->onTrial())
+        @php
+          $freeTrialRemainingDays = now()->diffInDays(auth()->user()->trial_ends_at);
+        @endphp
+        <x-alert type="info"
+          message="Trial ends in {{ $freeTrialRemainingDays }} days . <a href='{{ route('checkout') }}'>Upgrade Here</a>"></x-alert>
+      @endif
       @yield('content')
     </main>
   </div>
