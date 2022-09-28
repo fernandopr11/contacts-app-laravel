@@ -62,6 +62,9 @@
                 <a class="nav-link" href="{{ route('contacts.index') }}">My Contacts</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="{{ route('contact-shares.create') }}">Share Contacts</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="{{ route('contacts.create') }}">Create New Contact</a>
               </li>
               <li class="nav-item dropdown">
@@ -100,7 +103,8 @@
           $freeTrialRemainingDays = now()->diffInDays(auth()->user()->trial_ends_at);
         @endphp
         <x-alert type="info"
-          message="Trial ends in {{ $freeTrialRemainingDays }} days . <a href='{{ route('checkout') }}'>Upgrade Here</a>"></x-alert>
+          message="Trial ends in {{ $freeTrialRemainingDays }} days . <a href='{{ route('checkout') }}'>Upgrade Here</a>">
+        </x-alert>
       @endif
       @yield('content')
     </main>
