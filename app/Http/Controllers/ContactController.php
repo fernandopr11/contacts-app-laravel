@@ -7,6 +7,7 @@ use App\Models\Contact;
 use Illuminate\Contracts\Cache\Store;
 // use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,11 +25,8 @@ class ContactController extends Controller
     public function index()
     {
 
-        $contacts = auth()->
-        user()->
-        contacts()->
-        orderBy('name', 'desc')
-        ->paginate(6);
+        $contacts = auth()->user()->contacts()->orderBy('name', 'desc')
+            ->paginate(6);
 
         return view('contacts.index', compact('contacts'));
     }
@@ -61,6 +59,8 @@ class ContactController extends Controller
 
 
         $contact = auth()->user()->contacts()->create($data);
+
+        Cache::forget(auth()->id());
 
         return redirect()->route('home')->with(
             'alert',
@@ -121,6 +121,8 @@ class ContactController extends Controller
 
         $contact->update($data);
 
+        Cache::forget(auth()->id());
+
         return redirect()->route('home')->with(
             'alert',
             [
@@ -142,6 +144,8 @@ class ContactController extends Controller
         $this->authorize('delete', $contact);
 
         $contact->delete();
+
+        Cache::forget(auth()->id());
 
         return back()->with(
             'alert',
